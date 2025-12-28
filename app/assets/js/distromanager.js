@@ -4,7 +4,7 @@ const ConfigManager = require('./configmanager')
 
 // Nemesis Launcher Distribution URL
 // Hébergez votre distribution.json sur GitHub ou votre serveur
-exports.REMOTE_DISTRO_URL = 'https://raw.githubusercontent.com/espritfurtifx/nemesis-client/main/distribution.json'
+exports.REMOTE_DISTRO_URL = 'https://raw.githubusercontent.com/EspritFurifX/Nemesis-client/main/distribution.json'
 
 const api = new DistributionAPI(
     ConfigManager.getLauncherDirectory(),

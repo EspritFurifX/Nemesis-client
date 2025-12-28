@@ -396,19 +396,19 @@ function createMenu() {
             submenu: [{
                 label: 'GitHub Repository',
                 click: () => {
-                    shell.openExternal('https://github.com/espritfurtifx/nemesis-client')
+                    shell.openExternal('https://github.com/EspritFurifX/Nemesis-client')
                 }
             }, {
                 label: 'Report an Issue',
                 click: () => {
-                    shell.openExternal('https://github.com/espritfurtifx/nemesis-client/issues')
+                    shell.openExternal('https://github.com/EspritFurifX/Nemesis-client/issues')
                 }
             }, {
                 type: 'separator'
             }, {
                 label: 'View License',
                 click: () => {
-                    shell.openExternal('https://github.com/espritfurtifx/nemesis-client/blob/main/LICENSE.txt')
+                    shell.openExternal('https://github.com/EspritFurifX/Nemesis-client/blob/main/LICENSE.txt')
                 }
             }]
         }
