@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<!--
+    Interface principale du launcher Minecraft
+    Design inspiré du menu principal de Minecraft
+-->
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.minecraft.launcher.ui.MainController"
+      spacing="20"
+      alignment="CENTER"
+      style="-fx-background-color: #2C2F33; -fx-padding: 30;">
+
+    <!-- Titre du launcher -->
+    <Text text="MINECRAFT LAUNCHER" 
+          style="-fx-fill: white; -fx-font-size: 36; -fx-font-weight: bold;"/>
+    
+    <Text text="Version éducative gratuite et légale" 
+          style="-fx-fill: #99AAB5; -fx-font-size: 14;"/>
+    
+    <Separator prefWidth="400" style="-fx-background-color: #40444B;"/>
+    
+    <!-- Configuration du lancement -->
+    <GridPane hgap="15" vgap="15" alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" minWidth="150"/>
+            <ColumnConstraints halignment="LEFT" minWidth="250"/>
+        </columnConstraints>
+        
+        <!-- Sélection de version -->
+        <Label text="Version Minecraft :" 
+               style="-fx-text-fill: white; -fx-font-size: 14;"
+               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <ComboBox fx:id="versionComboBox" 
+                      prefWidth="200"
+                      style="-fx-background-color: #40444B; -fx-text-fill: white;"/>
+            <Button fx:id="refreshButton" 
+                    text="⟳" 
+                    onAction="#onRefreshClicked"
+                    style="-fx-background-color: #40444B; -fx-text-fill: white; -fx-font-size: 16;"/>
+        </HBox>
+        
+        <!-- Checkbox releases seulement -->
+        <Label text="" 
+               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <CheckBox fx:id="releasesOnlyCheckbox" 
+                  text="Releases seulement (masquer snapshots)" 
+                  onAction="#onReleasesOnlyChanged"
+                  style="-fx-text-fill: #99AAB5;"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        
+        <!-- Nom d'utilisateur -->
+        <Label text="Nom d'utilisateur :" 
+               style="-fx-text-fill: white; -fx-font-size: 14;"
+               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="usernameField" 
+                   prefWidth="200"
+                   style="-fx-background-color: #40444B; -fx-text-fill: white;"
+                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        
+        <!-- RAM -->
+        <Label text="RAM allouée (Mo) :" 
+               style="-fx-text-fill: white; -fx-font-size: 14;"
+               GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <Spinner fx:id="ramSpinner" 
+                 prefWidth="200"
+                 editable="true"
+                 style="-fx-background-color: #40444B;"
+                 GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    </GridPane>
+    
+    <Separator prefWidth="400" style="-fx-background-color: #40444B;"/>
+    
+    <!-- Boutons de lancement style Minecraft -->
+    <VBox spacing="15" alignment="CENTER">
+        <Button fx:id="singleplayerButton" 
+                text="SINGLEPLAYER"
+                onAction="#onSingleplayerClicked"
+                prefWidth="300"
+                prefHeight="40"
+                style="-fx-background-color: #5865F2; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;">
+            <font>
+                <Font name="System Bold" size="16"/>
+            </font>
+        </Button>
+        
+        <Button fx:id="multiplayerButton" 
+                text="MULTIPLAYER"
+                onAction="#onMultiplayerClicked"
+                prefWidth="300"
+                prefHeight="40"
+                style="-fx-background-color: #5865F2; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;">
+            <font>
+                <Font name="System Bold" size="16"/>
+            </font>
+        </Button>
+    </VBox>
+    
+    <Separator prefWidth="400" style="-fx-background-color: #40444B;"/>
+    
+    <!-- Barre de progression -->
+    <VBox spacing="5" alignment="CENTER">
+        <ProgressBar fx:id="progressBar" 
+                     prefWidth="400" 
+                     progress="0"
+                     style="-fx-accent: #5865F2;"/>
+        <Label fx:id="statusLabel" 
+               text="Prêt"
+               style="-fx-text-fill: #99AAB5; -fx-font-size: 12;"/>
+    </VBox>
+    
+    <!-- Zone de logs -->
+    <VBox spacing="5">
+        <Label text="Logs :" 
+               style="-fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
+        <TextArea fx:id="logArea" 
+                  prefWidth="450" 
+                  prefHeight="150"
+                  editable="false"
+                  wrapText="true"
+                  style="-fx-control-inner-background: #23272A; -fx-text-fill: #99AAB5; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/>
+    </VBox>
+    
+    <!-- Informations en bas -->
+    <HBox spacing="20" alignment="CENTER">
+        <Label text="Launcher éducatif v1.0" 
+               style="-fx-text-fill: #72767D; -fx-font-size: 10;"/>
+        <Label text="•" 
+               style="-fx-text-fill: #72767D; -fx-font-size: 10;"/>
+        <Label text="Utilise l'API officielle Mojang" 
+               style="-fx-text-fill: #72767D; -fx-font-size: 10;"/>
+        <Label text="•" 
+               style="-fx-text-fill: #72767D; -fx-font-size: 10;"/>
+        <Label text="100% Gratuit et Légal" 
+               style="-fx-text-fill: #72767D; -fx-font-size: 10;"/>
+    </HBox>
+    
+</VBox>
