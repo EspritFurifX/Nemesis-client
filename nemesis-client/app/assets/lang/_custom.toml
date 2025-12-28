@@ -1,0 +1,20 @@
+# Custom Language File for Launcher Customizer
+
+[ejs.app]
+title = "Nemesis Launcher"
+
+[ejs.landing]
+mediaGitHubURL = "https://nemesis-client.fr"
+mediaXURL = "https://nemesis-client.fr"
+mediaInstagramURL = "https://nemesis-client.fr"
+mediaYouTubeURL = "https://nemesis-client.fr"
+mediaDiscordURL = "https://discord.gg/PGm5Btsgb6"
+
+[ejs.settings]
+sourceGithubLink = "https://nemesis-client.fr"
+supportLink = "https://nemesis-client.fr/support"
+
+[ejs.welcome]
+welcomeHeader = "BIENVENUE SUR NEMESIS LAUNCHER"
+welcomeDescription = "Le launcher Minecraft Java Edition officiel avec authentification Microsoft intégrée. Nemesis Launcher vous permet de jouer à Minecraft de manière sécurisée et performante. Rejoignez notre communauté et profitez d'une expérience de jeu optimale avec un launcher moderne et élégant."
+welcomeDescCTA = "Vous êtes à quelques clics de votre aventure Minecraft."
