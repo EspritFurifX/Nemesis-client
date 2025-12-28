@@ -116,3 +116,7 @@ logs/
 .env
 *.key
 *.pem
+
+# Build outputs - Native packages
+Launcher/packages/
+Launcher/releases/

@@ -27,7 +27,7 @@ MAIN_CLASS="com.minecraft.launcher.Main"
 JAR_FILE="target/minecraft-educational-launcher-1.0.0-SNAPSHOT.jar"
 BUILD_DIR="target"
 PACKAGE_DIR="packages"
-ICON_PATH="../némésis.jpg"
+ICON_PATH="nemesis-icon.png"
 
 # Vérifier Java
 if ! command -v java &> /dev/null; then
