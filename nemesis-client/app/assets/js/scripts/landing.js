@@ -168,6 +168,8 @@ function updateSelectedServer(serv){
         animateSettingsTabRefresh()
     }
     setLaunchEnabled(serv != null)
+    // NEMESIS: Update system info when server changes
+    updateSystemInfoDisplay()
 }
 // Real text is set in uibinder.js on distributionIndexDone.
 server_selection_button.innerHTML = '&#8226; ' + Lang.queryJS('landing.selectedServer.loading')
@@ -232,7 +234,24 @@ const refreshMojangStatuses = async function(){
     
     document.getElementById('mojangStatusEssentialContainer').innerHTML = tooltipEssentialHTML
     document.getElementById('mojangStatusNonEssentialContainer').innerHTML = tooltipNonEssentialHTML
-    document.getElementById('mojang_status_icon').style.color = MojangRestAPI.statusToHex(status)
+    
+    // NEMESIS: Application des classes CSS Nemesis pour le status
+    const statusIcon = document.getElementById('mojang_status_icon')
+    statusIcon.style.color = MojangRestAPI.statusToHex(status)
+    
+    // Remove toutes les classes status existantes
+    statusIcon.classList.remove('status-online', 'status-warning', 'status-offline', 'status-grey')
+    
+    // Applique la bonne classe selon le status
+    if(status === 'green') {
+        statusIcon.classList.add('status-online')
+    } else if(status === 'yellow') {
+        statusIcon.classList.add('status-warning')
+    } else if(status === 'red') {
+        statusIcon.classList.add('status-offline')
+    } else {
+        statusIcon.classList.add('status-grey')
+    }
 }
 
 const refreshServerStatus = async (fade = false) => {
@@ -241,6 +260,7 @@ const refreshServerStatus = async (fade = false) => {
 
     let pLabel = Lang.queryJS('landing.serverStatus.server')
     let pVal = Lang.queryJS('landing.serverStatus.offline')
+    let isOnline = false
 
     try {
 
@@ -248,11 +268,21 @@ const refreshServerStatus = async (fade = false) => {
         console.log(servStat)
         pLabel = Lang.queryJS('landing.serverStatus.players')
         pVal = servStat.players.online + '/' + servStat.players.max
+        isOnline = true
 
     } catch (err) {
         loggerLanding.warn('Unable to refresh server status, assuming offline.')
         loggerLanding.debug(err)
     }
+    
+    // NEMESIS: Application de la classe CSS selon le status serveur
+    const playerCountElement = document.getElementById('player_count')
+    if(isOnline) {
+        playerCountElement.classList.add('server-online')
+    } else {
+        playerCountElement.classList.remove('server-online')
+    }
+    
     if(fade){
         $('#server_status_wrapper').fadeOut(250, () => {
             document.getElementById('landingPlayerLabel').innerHTML = pLabel
@@ -270,6 +300,45 @@ refreshMojangStatuses()
 // Server Status is refreshed in uibinder.js on distributionIndexDone.
 
 // Refresh statuses every hour. The status page itself refreshes every day so...
+
+/**
+ * NEMESIS: Update system info display (RAM + Java version)
+ * Shows current configuration in a subtle, non-intrusive way
+ */
+function updateSystemInfoDisplay() {
+    try {
+        const selectedServerId = ConfigManager.getSelectedServer()
+        
+        if (!selectedServerId) {
+            document.getElementById('launch_system_info_text').innerHTML = ''
+            return
+        }
+
+        // Get RAM configuration
+        const maxRAM = ConfigManager.getMaxRAM(selectedServerId)
+        
+        // Get Java executable path to extract version
+        const javaPath = ConfigManager.getJavaExecutable(selectedServerId)
+        let javaVersion = 'Java'
+        
+        // Try to extract Java version from path (e.g., "jre17", "java-17", etc.)
+        if (javaPath) {
+            const javaMatch = javaPath.match(/java[\\/-]?(\d+)|jre[\\/-]?(\d+)|jdk[\\/-]?(\d+)/i)
+            if (javaMatch) {
+                const version = javaMatch[1] || javaMatch[2] || javaMatch[3]
+                javaVersion = `Java ${version}`
+            }
+        }
+
+        // Format display: "⚙️ Java 17 • 4G RAM"
+        const displayText = `⚙️ ${javaVersion} • ${maxRAM} RAM`
+        document.getElementById('launch_system_info_text').innerHTML = displayText
+        
+    } catch (err) {
+        loggerLanding.debug('Unable to update system info display', err)
+        document.getElementById('launch_system_info_text').innerHTML = ''
+    }
+}
 let mojangStatusListener = setInterval(() => refreshMojangStatuses(true), 60*60*1000)
 // Set refresh rate to once every 5 minutes.
 let serverStatusListener = setInterval(() => refreshServerStatus(true), 300000)

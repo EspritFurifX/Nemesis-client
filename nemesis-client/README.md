@@ -39,25 +39,25 @@ This is not an exhaustive list. Download and install the launcher to gauge all i
 
 ## Downloads
 
-You can download from [GitHub Releases](https://github.com/dscalzi/HeliosLauncher/releases)
+You can download from [GitHub Releases](https://github.com/EspritFurifX/Nemesis-Launcher/releases)
 
 #### Latest Release
 
-[![](https://img.shields.io/github/release/dscalzi/HeliosLauncher.svg?style=flat-square)](https://github.com/dscalzi/HeliosLauncher/releases/latest)
+[![](https://img.shields.io/github/release/EspritFurifX/Nemesis-Launcher.svg?style=flat-square)](https://github.com/EspritFurifX/Nemesis-Launcher/releases/latest)
 
 #### Latest Pre-Release
-[![](https://img.shields.io/github/release/dscalzi/HeliosLauncher/all.svg?style=flat-square)](https://github.com/dscalzi/HeliosLauncher/releases)
+[![](https://img.shields.io/github/release/EspritFurifX/Nemesis-Launcher/all.svg?style=flat-square)](https://github.com/EspritFurifX/Nemesis-Launcher/releases)
 
 **Supported Platforms**
 
-If you download from the [Releases](https://github.com/dscalzi/HeliosLauncher/releases) tab, select the installer for your system.
+If you download from the [Releases](https://github.com/EspritFurifX/Nemesis-Launcher/releases) tab, select the installer for your system.
 
 | Platform | File |
 | -------- | ---- |
-| Windows x64 | `Helios-Launcher-setup-VERSION.exe` |
-| macOS x64 | `Helios-Launcher-setup-VERSION-x64.dmg` |
-| macOS arm64 | `Helios-Launcher-setup-VERSION-arm64.dmg` |
-| Linux x64 | `Helios-Launcher-setup-VERSION.AppImage` |
+| Windows x64 | `Nemesis-Launcher-setup-VERSION.exe` |
+| macOS x64 | `Nemesis-Launcher-setup-VERSION-x64.dmg` |
+| macOS arm64 | `Nemesis-Launcher-setup-VERSION-arm64.dmg` |
+| Linux x64 | `Nemesis-Launcher-setup-VERSION.AppImage` |
 
 ## Console
 
@@ -91,8 +91,8 @@ This section details the setup of a basic developmentment environment.
 **Clone and Install Dependencies**
 
 ```console
-> git clone https://github.com/dscalzi/HeliosLauncher.git
-> cd HeliosLauncher
+> git clone https://github.com/EspritFurifX/Nemesis-Launcher.git
+> cd Nemesis-Launcher/nemesis-client
 > npm install
 ```
 
@@ -179,21 +179,22 @@ Note that you **cannot** open the DevTools window while using this debug configu
 
 ### Note on Third-Party Usage
 
-Please give credit to the original author and provide a link to the original source. This is free software, please do at least this much.
+Nemesis Launcher is built on top of the excellent [Helios Launcher](https://github.com/dscalzi/HeliosLauncher) by dscalzi. 
+We give full credit to the original author and maintain the open-source spirit of the project.
 
-For instructions on setting up Microsoft Authentication, see https://github.com/dscalzi/HeliosLauncher/blob/master/docs/MicrosoftAuth.md.
+For instructions on setting up Microsoft Authentication, see our [Microsoft Auth Documentation](https://github.com/EspritFurifX/Nemesis-Launcher/blob/master/docs/MicrosoftAuth.md).
 
 ---
 
 ## Resources
 
-* [Wiki][wiki]
-* [Nebula (Create Distribution.json)][nebula]
-* [v2 Rewrite Branch (Inactive)][v2branch]
+* [Nemesis Launcher Wiki](https://github.com/EspritFurifX/Nemesis-Launcher/wiki)
+* [Distribution Guide](./DISTRIBUTION_GUIDE.md)
+* [Original Helios Launcher](https://github.com/dscalzi/HeliosLauncher) (Upstream project)
 
-The best way to contact the developers is on Discord.
+The best way to contact us is on Discord.
 
-[![discord](https://discordapp.com/api/guilds/211524927831015424/embed.png?style=banner3)][discord]
+[![discord](https://discordapp.com/api/guilds/211524927831015424/embed.png?style=banner3)](https://discord.gg/PGm5Btsgb6)
 
 ---
 
@@ -206,6 +207,3 @@ The best way to contact the developers is on Discord.
 [rendererprocess]: https://electronjs.org/docs/tutorial/application-architecture#main-and-renderer-processes 'Renderer Process'
 [chromedebugger]: https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome 'Debugger for Chrome'
 [discord]: https://discord.gg/PGm5Btsgb6 'Discord'
-[wiki]: https://github.com/dscalzi/HeliosLauncher/wiki 'wiki'
-[nebula]: https://github.com/dscalzi/Nebula 'dscalzi/Nebula'
-[v2branch]: https://github.com/dscalzi/HeliosLauncher/tree/ts-refactor 'v2 branch'
