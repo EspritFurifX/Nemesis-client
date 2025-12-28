@@ -13,6 +13,9 @@ const { pathToFileURL }                 = require('url')
 const { AZURE_CLIENT_ID, MSFT_OPCODE, MSFT_REPLY_TYPE, MSFT_ERROR, SHELL_OPCODE } = require('./app/assets/js/ipcconstants')
 const LangLoader                        = require('./app/assets/js/langloader')
 
+// Set app name (fixes "Electron" in menu bar)
+app.name = 'Nemesis Launcher'
+
 // Setup Lang
 LangLoader.setupLanguage()
 
@@ -314,8 +317,104 @@ function createMenu() {
             }]
         }
 
+        // View menu
+        let viewSubMenu = {
+            label: 'View',
+            submenu: [{
+                label: 'Reload',
+                accelerator: 'CmdOrCtrl+R',
+                click: (item, focusedWindow) => {
+                    if (focusedWindow) focusedWindow.reload()
+                }
+            }, {
+                label: 'Toggle Developer Tools',
+                accelerator: 'Alt+CmdOrCtrl+I',
+                click: (item, focusedWindow) => {
+                    if (focusedWindow) focusedWindow.toggleDevTools()
+                }
+            }, {
+                type: 'separator'
+            }, {
+                label: 'Actual Size',
+                accelerator: 'CmdOrCtrl+0',
+                click: (item, focusedWindow) => {
+                    if (focusedWindow) focusedWindow.webContents.setZoomLevel(0)
+                }
+            }, {
+                label: 'Zoom In',
+                accelerator: 'CmdOrCtrl+Plus',
+                click: (item, focusedWindow) => {
+                    if (focusedWindow) {
+                        const zoomLevel = focusedWindow.webContents.getZoomLevel()
+                        focusedWindow.webContents.setZoomLevel(zoomLevel + 0.5)
+                    }
+                }
+            }, {
+                label: 'Zoom Out',
+                accelerator: 'CmdOrCtrl+-',
+                click: (item, focusedWindow) => {
+                    if (focusedWindow) {
+                        const zoomLevel = focusedWindow.webContents.getZoomLevel()
+                        focusedWindow.webContents.setZoomLevel(zoomLevel - 0.5)
+                    }
+                }
+            }, {
+                type: 'separator'
+            }, {
+                label: 'Toggle Full Screen',
+                accelerator: 'Ctrl+Cmd+F',
+                click: (item, focusedWindow) => {
+                    if (focusedWindow) {
+                        focusedWindow.setFullScreen(!focusedWindow.isFullScreen())
+                    }
+                }
+            }]
+        }
+
+        // Window menu
+        let windowSubMenu = {
+            label: 'Window',
+            submenu: [{
+                label: 'Minimize',
+                accelerator: 'CmdOrCtrl+M',
+                selector: 'performMiniaturize:'
+            }, {
+                label: 'Close',
+                accelerator: 'CmdOrCtrl+W',
+                selector: 'performClose:'
+            }, {
+                type: 'separator'
+            }, {
+                label: 'Bring All to Front',
+                selector: 'arrangeInFront:'
+            }]
+        }
+
+        // Help menu
+        let helpSubMenu = {
+            label: 'Help',
+            submenu: [{
+                label: 'GitHub Repository',
+                click: () => {
+                    shell.openExternal('https://github.com/espritfurtifx/nemesis-client')
+                }
+            }, {
+                label: 'Report an Issue',
+                click: () => {
+                    shell.openExternal('https://github.com/espritfurtifx/nemesis-client/issues')
+                }
+            }, {
+                type: 'separator'
+            }, {
+                label: 'View License',
+                click: () => {
+                    shell.openExternal('https://github.com/espritfurtifx/nemesis-client/blob/main/LICENSE.txt')
+                }
+            }]
+        }
+
         // Bundle submenus into a single template and build a menu object with it
-        let menuTemplate = [applicationSubMenu, editSubMenu]
+        let menuTemplate = [applicationSubMenu, editSubMenu, viewSubMenu, windowSubMenu, helpSubMenu]
         let menuObject = Menu.buildFromTemplate(menuTemplate)
 
         // Assign it to the application
