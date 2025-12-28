@@ -169,8 +169,8 @@ public class MaClasse {
 
 ```bash
 # Cloner votre fork
-git clone https://github.com/EspritFurifX/N-m-sis-client.git
-cd N-m-sis-client/Launcher
+git clone https://github.com/EspritFurifX/Nemesis-client.git
+cd Nemesis-client/Launcher
 
 # Compiler
 mvn clean package

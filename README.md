@@ -136,8 +136,8 @@ NÉMÉSIS CLIENT est un **projet éducatif** destiné à :
 
 ```bash
 # 1. Cloner le repository
-git clone https://github.com/EspritFurifX/N-m-sis-client.git
-cd N-m-sis-client
+git clone https://github.com/EspritFurifX/Nemesis-client.git
+cd Nemesis-client
 
 # 2. Installer le launcher
 cd Launcher
