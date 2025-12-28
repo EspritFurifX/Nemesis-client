@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<!--
+    NÉMÉSIS CLIENT - Écran de connexion Microsoft
+    Système multi-comptes avec authentification OAuth 2.0
+-->
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.minecraft.launcher.ui.LoginController"
+           prefWidth="1280"
+           prefHeight="800"
+           stylesheets="@../css/glassmorphism.css"
+           styleClass="root">
+
+    <VBox alignment="CENTER" spacing="40" style="-fx-padding: 60;">
+        
+        <!-- Header with Logo -->
+        <VBox alignment="CENTER" spacing="15">
+            <!-- Logo Némésis -->
+            <Region styleClass="logo-glow" style="-fx-background-color: #00d9ff; -fx-pref-width: 90; -fx-pref-height: 90; -fx-background-radius: 18;"/>
+            
+            <VBox alignment="CENTER" spacing="5">
+                <Text text="NÉMÉSIS CLIENT" style="-fx-font-size: 32; -fx-font-weight: bold; -fx-fill: white;"/>
+                <Text text="Launcher Minecraft Java Edition" style="-fx-font-size: 14; -fx-fill: #7a8090;"/>
+            </VBox>
+        </VBox>
+
+        <!-- Login Panel -->
+        <VBox alignment="CENTER" spacing="25" maxWidth="520" styleClass="glass-panel" style="-fx-padding: 50 55;">
+            
+            <VBox alignment="CENTER" spacing="8">
+                <Text text="CONNEXION REQUISE" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: white;"/>
+                <Text text="Connectez-vous avec votre compte Microsoft" style="-fx-font-size: 12; -fx-fill: #7a8090; -fx-text-alignment: center;" textAlignment="CENTER" wrappingWidth="350"/>
+            </VBox>
+
+            <!-- Accounts List (if any saved) -->
+            <VBox fx:id="accountsBox" spacing="10" maxHeight="200" styleClass="glass-panel-dark" style="-fx-padding: 18;">
+                <Label text="COMPTES ENREGISTRÉS" style="-fx-text-fill: #00d9ff; -fx-font-size: 10; -fx-font-weight: bold; -fx-letter-spacing: 1;"/>
+                
+                <ListView fx:id="accountsList" 
+                          prefHeight="120"
+                          styleClass="glass-list"/>
+            </VBox>
+
+            <Separator style="-fx-background-color: #2a2d3a;"/>
+
+            <!-- Login Button -->
+            <Button fx:id="loginButton"
+                    text="🔐  SE CONNECTER AVEC MICROSOFT"
+                    onAction="#onLoginClicked"
+                    maxWidth="Infinity"
+                    prefHeight="60"
+                    styleClass="primary-button"
+                    style="-fx-font-size: 15;"/>
+
+            <!-- Status Label -->
+            <Label fx:id="statusLabel" 
+                   text="" 
+                   style="-fx-text-fill: #00d9ff; -fx-font-size: 11; -fx-font-weight: bold;"
+                   wrapText="true"
+                   textAlignment="CENTER"/>
+
+            <VBox alignment="CENTER" spacing="8">
+                <Text text="⚠️ Attention" style="-fx-font-size: 11; -fx-font-weight: bold; -fx-fill: #ffa500;"/>
+                <Text text="L'authentification Microsoft est obligatoire pour jouer. Vos identifiants ne sont jamais stockés localement." 
+                      style="-fx-font-size: 10; -fx-fill: #7a8090; -fx-text-alignment: center;" 
+                      textAlignment="CENTER" 
+                      wrappingWidth="400"/>
+            </VBox>
+        </VBox>
+
+        <!-- Footer -->
+        <VBox alignment="CENTER" spacing="5">
+            <Text text="NÉMÉSIS CLIENT v2.0" style="-fx-font-size: 10; -fx-fill: #5a5d6a;"/>
+            <Text text="Launcher éducatif et légal pour Minecraft Java Edition" style="-fx-font-size: 9; -fx-fill: #5a5d6a;"/>
+        </VBox>
+
+    </VBox>
+
+</StackPane>

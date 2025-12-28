@@ -40,17 +40,17 @@ public class Main extends Application {
             LOGGER.info("Java : {}", System.getProperty("java.version"));
             LOGGER.info("JavaFX : {}", System.getProperty("javafx.version"));
             
-            // Chargement du fichier FXML
+            // Chargement de l'écran de connexion d'abord
             FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/fxml/main.fxml")
+                getClass().getResource("/fxml/login.fxml")
             );
             Parent root = loader.load();
             
-            // Configuration de la scène
-            Scene scene = new Scene(root, 550, 850);
+            // Configuration de la scène (1280x800 pour interface professionnelle)
+            Scene scene = new Scene(root, 1280, 800);
             
             // Configuration de la fenêtre
-            primaryStage.setTitle("Minecraft Launcher - Éducatif");
+            primaryStage.setTitle("NÉMÉSIS CLIENT - Connexion");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false); // Taille fixe pour un design cohérent
             

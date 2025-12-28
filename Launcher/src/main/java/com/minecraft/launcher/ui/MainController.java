@@ -7,347 +7,416 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Contrôleur JavaFX pour l'interface principale du launcher.
- * 
- * Cette classe gère toutes les interactions utilisateur :
- * - Récupération et affichage des versions Minecraft
- * - Sélection d'une version
- * - Configuration du lancement
- * - Lancement du jeu
- * - Affichage des logs
+ * Structure: Sidebar versions | Zone centrale logs | Bottom actions
  */
 public class MainController {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     
-    // Composants FXML (liés au fichier main.fxml)
-    @FXML private ComboBox<MinecraftVersion> versionComboBox;
-    @FXML private TextField usernameField;
-    @FXML private Spinner<Integer> ramSpinner;
-    @FXML private Button singleplayerButton;
-    @FXML private Button multiplayerButton;
-    @FXML private Button refreshButton;
+    // Composants FXML - Nouvelle structure
+    @FXML private Label userLabel;
+    @FXML private TextField searchField;
+    @FXML private CheckBox releasesOnlyCheckbox;
+    @FXML private ListView<MinecraftVersion> versionListView;
+    @FXML private Slider ramSlider;
+    @FXML private Label ramLabel;
+    @FXML private Label versionInfoLabel;
+    @FXML private VBox logSection;
     @FXML private TextArea logArea;
     @FXML private ProgressBar progressBar;
     @FXML private Label statusLabel;
-    @FXML private CheckBox releasesOnlyCheckbox;
+    @FXML private Label downloadSpeedLabel;
+    @FXML private Button singleplayerButton;
+    @FXML private Button multiplayerButton;
+    @FXML private Button launchButton;
     
     // Gestionnaires
     private VersionManager versionManager;
     private DownloadManager downloadManager;
     private LaunchManager launchManager;
     
+    // Version sélectionnée
+    private MinecraftVersion selectedVersion = null;
+    
+    // Compte Microsoft authentifié
+    private LoginController.MinecraftAccount authenticatedAccount = null;
+    
+    /**
+     * Définir le compte authentifié depuis l'écran de connexion
+     */
+    public void setAuthenticatedAccount(LoginController.MinecraftAccount account) {
+        this.authenticatedAccount = account;
+        if (account != null) {
+            userLabel.setText(account.getUsername());
+            logMessage("✅ Connecté en tant que " + account.getUsername());
+        }
+    }
+    
     /**
      * Méthode d'initialisation appelée automatiquement par JavaFX.
-     * 
-     * Cette méthode est appelée après que tous les composants FXML
-     * ont été injectés via @FXML.
      */
     @FXML
     public void initialize() {
         LOGGER.info("Initialisation du contrôleur...");
         
-        // 1. Configuration du Spinner de RAM (512 Mo à 16 Go)
-        SpinnerValueFactory<Integer> ramFactory = 
-            new SpinnerValueFactory.IntegerSpinnerValueFactory(512, 16384, 2048, 512);
-        ramSpinner.setValueFactory(ramFactory);
-        
-        // 2. Configuration du nom d'utilisateur par défaut
-        usernameField.setText("Joueur_" + System.currentTimeMillis() % 10000);
-        
-        // 3. Initialisation des gestionnaires
+        // 1. Initialisation des gestionnaires
         Path minecraftDir = Paths.get(System.getProperty("user.home"), ".minecraft-launcher");
         downloadManager = new DownloadManager(minecraftDir);
         launchManager = new LaunchManager(downloadManager);
         versionManager = new VersionManager();
         
-        // 4. Configuration de la ComboBox de versions
-        versionComboBox.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(MinecraftVersion item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.getId() + " [" + item.getType() + "]");
-                }
-            }
+        // 2. Configuration du slider RAM
+        ramSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            int ram = newVal.intValue();
+            ramLabel.setText(ram + " Mo");
         });
-        versionComboBox.setButtonCell(new ListCell<>() {
+        ramSlider.setValue(2048);
+        
+        // 3. Configuration de la ListView des versions
+        versionListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(MinecraftVersion item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
+                    setStyle("");
                 } else {
                     setText(item.getId());
+                    setStyle("-fx-background-color: " + (item.getType().equals("release") ? "#1a1d24" : "#14161e") + 
+                             "; -fx-text-fill: " + (item.getType().equals("release") ? "#00d9ff" : "#7a8090") + 
+                             "; -fx-padding: 10; -fx-font-size: 12; -fx-font-weight: " + 
+                             (item.getType().equals("release") ? "bold" : "normal") + ";");
                 }
             }
         });
         
-        // 5. Chargement initial des versions
+        // Sélection d'une version dans la liste
+        versionListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                selectedVersion = newVal;
+                versionInfoLabel.setText("Version: " + newVal.getId() + " (" + newVal.getType() + ")");
+                logMessage("✓ Version sélectionnée: " + newVal.getId());
+            }
+        });
+        
+        // 4. Configuration du champ de recherche
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            filterVersions(newVal);
+        });
+        
+        // 5. Username par défaut
+        String username = "Joueur_" + System.currentTimeMillis() % 10000;
+        userLabel.setText(username);
+        
+        // 6. Chargement initial des versions
         loadVersions();
         
-        LOGGER.info("Contrôleur initialisé");
+        logMessage("=== NÉMÉSIS CLIENT v2.0 ===");
+        logMessage("Launcher initialisé");
+        logMessage("Prêt à télécharger et lancer Minecraft");
     }
     
     /**
-     * Charge la liste des versions Minecraft depuis l'API Mojang.
+     * Charge la liste des versions Minecraft
      */
-    @FXML
     private void loadVersions() {
         LOGGER.info("Chargement des versions...");
         statusLabel.setText("Chargement des versions...");
-        progressBar.setProgress(-1); // Mode indéterminé
+        progressBar.setProgress(-1);
         
-        // Exécution dans un thread séparé pour ne pas bloquer l'UI
         new Thread(() -> {
-            boolean success = versionManager.fetchVersions();
-            
-            // Mise à jour de l'UI dans le thread JavaFX
-            Platform.runLater(() -> {
-                if (success) {
-                    updateVersionList();
-                    statusLabel.setText("Prêt - " + versionManager.getVersions().size() + " versions disponibles");
-                    logMessage("Versions chargées avec succès");
-                } else {
-                    statusLabel.setText("Erreur lors du chargement des versions");
-                    showError("Impossible de récupérer les versions Minecraft. Vérifiez votre connexion internet.");
+            try {
+                // Télécharger les versions depuis l'API Mojang
+                boolean success = versionManager.fetchVersions();
+                
+                if (!success) {
+                    Platform.runLater(() -> {
+                        statusLabel.setText("❌ Erreur: impossible de charger les versions");
+                        progressBar.setProgress(0);
+                        logMessage("❌ Impossible de charger les versions depuis l'API Mojang");
+                        logMessage("Vérifiez votre connexion internet");
+                    });
+                    return;
                 }
+                
+                List<MinecraftVersion> versions;
+                
+                if (releasesOnlyCheckbox.isSelected()) {
+                    versions = versionManager.getReleases();
+                } else {
+                    versions = versionManager.getVersions();
+                }
+                
+                Platform.runLater(() -> {
+                    versionListView.setItems(FXCollections.observableArrayList(versions));
+                    statusLabel.setText("Prêt – " + versions.size() + " versions disponibles");
+                    progressBar.setProgress(0);
+                    logMessage("✓ " + versions.size() + " versions chargées");
+                    
+                    // Sélectionner la dernière release
+                    if (!versions.isEmpty()) {
+                        MinecraftVersion latest = versionManager.getLatestRelease();
+                        if (latest != null && versions.contains(latest)) {
+                            versionListView.getSelectionModel().select(latest);
+                        } else {
+                            versionListView.getSelectionModel().selectFirst();
+                        }
+                    }
+                });
+                
+            } catch (Exception e) {
+                LOGGER.error("Erreur chargement versions", e);
+                Platform.runLater(() -> {
+                    statusLabel.setText("Erreur chargement versions");
+                    progressBar.setProgress(0);
+                    logMessage("❌ Erreur: " + e.getMessage());
+                });
+            }
+        }).start();
+    }
+    
+    /**
+     * Filtre les versions selon la recherche
+     */
+    private void filterVersions(String searchText) {
+        if (searchText == null || searchText.trim().isEmpty()) {
+            updateVersionList();
+            return;
+        }
+        
+        String search = searchText.toLowerCase();
+        List<MinecraftVersion> allVersions;
+        
+        if (releasesOnlyCheckbox.isSelected()) {
+            allVersions = versionManager.getReleases();
+        } else {
+            allVersions = versionManager.getVersions();
+        }
+        
+        List<MinecraftVersion> filtered = allVersions.stream()
+            .filter(v -> v.getId().toLowerCase().contains(search))
+            .collect(Collectors.toList());
+        
+        versionListView.setItems(FXCollections.observableArrayList(filtered));
+        logMessage("🔍 " + filtered.size() + " versions trouvées");
+    }
+    
+    /**
+     * Met à jour la liste des versions
+     */
+    private void updateVersionList() {
+        statusLabel.setText("Mise à jour de la liste...");
+        progressBar.setProgress(-1);
+        
+        new Thread(() -> {
+            List<MinecraftVersion> versions;
+            
+            if (releasesOnlyCheckbox.isSelected()) {
+                versions = versionManager.getReleases();
+            } else {
+                versions = versionManager.getVersions();
+            }
+            
+            Platform.runLater(() -> {
+                versionListView.setItems(FXCollections.observableArrayList(versions));
+                statusLabel.setText("Prêt – " + versions.size() + " versions disponibles");
                 progressBar.setProgress(0);
+                logMessage("✓ Affichage de " + versions.size() + " versions");
             });
         }).start();
     }
     
     /**
-     * Met à jour la liste des versions dans la ComboBox.
-     */
-    private void updateVersionList() {
-        List<MinecraftVersion> versions;
-        
-        if (releasesOnlyCheckbox.isSelected()) {
-            versions = versionManager.getReleases();
-            logMessage("Affichage des releases uniquement");
-        } else {
-            versions = versionManager.getVersions();
-            logMessage("Affichage de toutes les versions");
-        }
-        
-        versionComboBox.setItems(FXCollections.observableArrayList(versions));
-        
-        // Sélection de la dernière release par défaut
-        if (!versions.isEmpty()) {
-            MinecraftVersion latest = versionManager.getLatestRelease();
-            if (latest != null && versions.contains(latest)) {
-                versionComboBox.setValue(latest);
-            } else {
-                versionComboBox.setValue(versions.get(0));
-            }
-        }
-    }
-    
-    /**
-     * Lance le jeu en mode solo.
-     */
-    @FXML
-    private void onSingleplayerClicked() {
-        launchGame();
-    }
-    
-    /**
-     * Lance le jeu en mode multijoueur.
-     * 
-     * Note : Le mode solo et multijoueur lancent le même jeu.
-     * C'est ensuite dans le jeu que le joueur choisit solo ou multi.
-     */
-    @FXML
-    private void onMultiplayerClicked() {
-        launchGame();
-    }
-    
-    /**
-     * Recharge la liste des versions.
-     */
-    @FXML
-    private void onRefreshClicked() {
-        loadVersions();
-    }
-    
-    /**
-     * Appelée quand la checkbox "Releases seulement" change.
+     * Handler pour le checkbox "Releases uniquement"
      */
     @FXML
     private void onReleasesOnlyChanged() {
         updateVersionList();
+        String mode = releasesOnlyCheckbox.isSelected() ? "releases uniquement" : "toutes versions";
+        logMessage("🔄 Mode: " + mode);
     }
     
     /**
-     * Lance le jeu avec les paramètres sélectionnés.
+     * Handler pour le bouton LANCER
      */
-    private void launchGame() {
-        // 1. Validation des paramètres
-        MinecraftVersion selectedVersion = versionComboBox.getValue();
+    @FXML
+    private void onLaunchClicked() {
         if (selectedVersion == null) {
-            showError("Veuillez sélectionner une version");
+            logMessage("❌ Aucune version sélectionnée");
             return;
         }
         
-        String username = usernameField.getText().trim();
-        if (username.isEmpty()) {
-            showError("Veuillez entrer un nom d'utilisateur");
-            return;
-        }
+        launchButton.setDisable(true);
+        String versionId = selectedVersion.getId();
+        int ramMb = (int) ramSlider.getValue();
+        String username = userLabel.getText();
         
-        int ram = ramSpinner.getValue();
+        logMessage("===========================================");
+        logMessage("▶ LANCEMENT DE MINECRAFT");
+        logMessage("Version: " + versionId);
+        logMessage("RAM: " + ramMb + " Mo");
+        logMessage("Joueur: " + username);
+        logMessage("===========================================");
         
-        // 2. Désactivation des boutons pendant le lancement
-        setButtonsEnabled(false);
         statusLabel.setText("Préparation du lancement...");
-        logMessage("=== Lancement de Minecraft " + selectedVersion.getId() + " ===");
-        logMessage("Joueur : " + username);
-        logMessage("RAM : " + ram + " Mo");
+        progressBar.setProgress(0);
         
-        // 3. Téléchargement et lancement dans un thread séparé
-        new Thread(() -> {
-            try {
-                // 3.1 Téléchargement du JSON de version
-                Platform.runLater(() -> {
-                    statusLabel.setText("Téléchargement des informations de version...");
-                    progressBar.setProgress(-1);
-                });
-                
-                JsonObject versionJson = downloadManager.downloadVersionJson(selectedVersion);
-                if (versionJson == null) {
-                    Platform.runLater(() -> {
-                        showError("Erreur lors du téléchargement des informations de version");
-                        setButtonsEnabled(true);
-                        statusLabel.setText("Erreur");
-                        progressBar.setProgress(0);
-                    });
-                    return;
-                }
-                
-                Platform.runLater(() -> logMessage("✓ Informations de version téléchargées"));
-                
-                // 3.2 Téléchargement du JAR client
-                Platform.runLater(() -> statusLabel.setText("Téléchargement du client..."));
-                
-                boolean jarDownloaded = downloadManager.downloadClientJar(selectedVersion, versionJson);
-                if (!jarDownloaded) {
-                    Platform.runLater(() -> {
-                        showError("Erreur lors du téléchargement du client");
-                        setButtonsEnabled(true);
-                        statusLabel.setText("Erreur");
-                        progressBar.setProgress(0);
-                    });
-                    return;
-                }
-                
-                Platform.runLater(() -> logMessage("✓ Client téléchargé"));
-                
-                // 3.3 Téléchargement des libraries (NOUVEAU !)
-                Platform.runLater(() -> {
-                    statusLabel.setText("Téléchargement des libraries...");
-                    logMessage("Téléchargement des dépendances Java...");
-                });
-                
-                List<Path> libraryPaths = downloadManager.downloadLibraries(versionJson);
-                if (libraryPaths.isEmpty()) {
-                    Platform.runLater(() -> {
-                        logMessage("⚠ Aucune library téléchargée (peut causer des problèmes)");
-                    });
-                } else {
-                    Platform.runLater(() -> logMessage("✓ " + libraryPaths.size() + " libraries téléchargées"));
-                }
-                
-                // 3.4 Téléchargement des assets (NOUVEAU !)
-                Platform.runLater(() -> {
-                    statusLabel.setText("Téléchargement des ressources (sons, textures)...");
-                    logMessage("Téléchargement des assets (peut prendre du temps)...");
-                });
-                
-                boolean assetsDownloaded = downloadManager.downloadAssets(versionJson);
-                if (assetsDownloaded) {
-                    Platform.runLater(() -> logMessage("✓ Assets téléchargés"));
-                } else {
-                    Platform.runLater(() -> logMessage("⚠ Erreur lors du téléchargement des assets"));
-                }
-                
-                // 3.5 Lancement du jeu
-                Platform.runLater(() -> {
-                    statusLabel.setText("Lancement du jeu...");
-                    logMessage("Construction de la commande de lancement...");
-                });
-                
-                boolean launched = launchManager.launchGame(
-                    selectedVersion, 
-                    versionJson,
-                    libraryPaths,  // NOUVEAU : on passe les libraries
-                    username, 
-                    ram
-                );
-                
-                Platform.runLater(() -> {
-                    if (launched) {
-                        statusLabel.setText("🎮 Jeu lancé !");
-                        logMessage("✓ Minecraft lancé avec succès");
-                        logMessage("Vous pouvez maintenant fermer le launcher ou consulter les logs du jeu ci-dessus");
-                    } else {
-                        showError("Erreur lors du lancement du jeu. Vérifiez les logs.");
-                        statusLabel.setText("Erreur");
-                    }
-                    
-                    setButtonsEnabled(true);
-                    progressBar.setProgress(0);
-                });
-                
-            } catch (Exception e) {
-                LOGGER.error("Erreur lors du lancement", e);
-                Platform.runLater(() -> {
-                    showError("Erreur : " + e.getMessage());
-                    setButtonsEnabled(true);
-                    statusLabel.setText("Erreur");
-                    progressBar.setProgress(0);
-                });
-            }
-        }).start();
+        new Thread(() -> launchGame(versionId, ramMb, username)).start();
     }
     
     /**
-     * Active ou désactive les boutons de lancement.
+     * Handlers pour les boutons SINGLEPLAYER, MULTIPLAYER, OPTIONS
      */
-    private void setButtonsEnabled(boolean enabled) {
-        singleplayerButton.setDisable(!enabled);
-        multiplayerButton.setDisable(!enabled);
-        refreshButton.setDisable(!enabled);
+    @FXML
+    private void onSingleplayerClicked() {
+        onLaunchClicked();
+    }
+    
+    @FXML
+    private void onMultiplayerClicked() {
+        logMessage("🌐 Mode multijoueur - Connexion à un serveur après lancement");
+        onLaunchClicked();
+    }
+    
+    @FXML
+    private void onOptionsClicked() {
+        logMessage("⚙️ Options - Configuration disponible après premier lancement");
+    }
+    
+    /**
+     * Lance le jeu Minecraft avec les paramètres sélectionnés.
+     */
+    private void launchGame(String versionId, int ramMb, String username) {
+        try {
+            // 1. Téléchargement du JSON de version
+            Platform.runLater(() -> {
+                statusLabel.setText("Téléchargement des informations de version...");
+                progressBar.setProgress(-1);
+            });
+            
+            MinecraftVersion version = selectedVersion;
+            JsonObject versionJson = downloadManager.downloadVersionJson(version);
+            if (versionJson == null) {
+                Platform.runLater(() -> {
+                    statusLabel.setText("❌ Erreur: informations de version");
+                    progressBar.setProgress(0);
+                    logMessage("❌ Impossible de télécharger les informations de version");
+                    launchButton.setDisable(false);
+                });
+                return;
+            }
+            
+            Platform.runLater(() -> logMessage("✓ Informations de version téléchargées"));
+            
+            // 2. Téléchargement du JAR client
+            Platform.runLater(() -> {
+                statusLabel.setText("Téléchargement du client Minecraft...");
+                progressBar.setProgress(0.2);
+            });
+            
+            boolean jarDownloaded = downloadManager.downloadClientJar(version, versionJson);
+            if (!jarDownloaded) {
+                Platform.runLater(() -> {
+                    statusLabel.setText("❌ Erreur: client Minecraft");
+                    progressBar.setProgress(0);
+                    logMessage("❌ Impossible de télécharger le client");
+                    launchButton.setDisable(false);
+                });
+                return;
+            }
+            
+            Platform.runLater(() -> logMessage("✓ Client Minecraft téléchargé"));
+            
+            // 3. Téléchargement des libraries
+            Platform.runLater(() -> {
+                statusLabel.setText("Téléchargement des libraries Java...");
+                progressBar.setProgress(0.4);
+                logMessage("Téléchargement des dépendances Java...");
+            });
+            
+            List<Path> libraryPaths = downloadManager.downloadLibraries(versionJson);
+            if (libraryPaths.isEmpty()) {
+                Platform.runLater(() -> {
+                    logMessage("⚠ Aucune library téléchargée");
+                });
+            } else {
+                Platform.runLater(() -> logMessage("✓ " + libraryPaths.size() + " libraries téléchargées"));
+            }
+            
+            // 4. Téléchargement des assets
+            Platform.runLater(() -> {
+                statusLabel.setText("Téléchargement des ressources (sons, textures)...");
+                progressBar.setProgress(0.6);
+                logMessage("Téléchargement des assets (peut prendre du temps)...");
+            });
+            
+            boolean assetsDownloaded = downloadManager.downloadAssets(versionJson);
+            if (assetsDownloaded) {
+                Platform.runLater(() -> logMessage("✓ Assets téléchargés"));
+            } else {
+                Platform.runLater(() -> logMessage("⚠ Erreur lors du téléchargement des assets"));
+            }
+            
+            // 5. Lancement du jeu
+            Platform.runLater(() -> {
+                statusLabel.setText("Lancement de Minecraft...");
+                progressBar.setProgress(0.8);
+                logMessage("Construction de la commande de lancement...");
+            });
+            
+            boolean launched = launchManager.launchGame(
+                version,
+                versionJson,
+                libraryPaths,
+                username,
+                ramMb
+            );
+            
+            Platform.runLater(() -> {
+                if (launched) {
+                    statusLabel.setText("🎮 Minecraft lancé avec succès !");
+                    progressBar.setProgress(1.0);
+                    logMessage("✓ Minecraft lancé avec succès");
+                    logMessage("===========================================");
+                    logMessage("Vous pouvez consulter les logs ci-dessus");
+                    logMessage("Bon jeu !");
+                } else {
+                    statusLabel.setText("❌ Erreur lors du lancement");
+                    progressBar.setProgress(0);
+                    logMessage("❌ Erreur: Impossible de lancer le jeu");
+                }
+                
+                launchButton.setDisable(false);
+            });
+            
+        } catch (Exception e) {
+            LOGGER.error("Erreur lors du lancement", e);
+            Platform.runLater(() -> {
+                statusLabel.setText("❌ Erreur: " + e.getMessage());
+                progressBar.setProgress(0);
+                logMessage("❌ Exception: " + e.getMessage());
+                launchButton.setDisable(false);
+            });
+        }
     }
     
     /**
      * Affiche un message dans la zone de logs.
      */
     private void logMessage(String message) {
-        logArea.appendText(message + "\n");
-    }
-    
-    /**
-     * Affiche une boîte de dialogue d'erreur.
-     */
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erreur");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-        
-        logMessage("ERREUR : " + message);
+        String timestamp = java.time.LocalTime.now().toString().substring(0, 8);
+        logArea.appendText("[" + timestamp + "] " + message + "\n");
     }
 }

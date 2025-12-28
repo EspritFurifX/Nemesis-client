@@ -1,0 +1,195 @@
+/* NÉMÉSIS CLIENT - Glassmorphism Style */
+
+/* Root styling - Dark space theme */
+.root {
+    -fx-background-color: #0a0e14;
+}
+
+
+/* Glassmorphism panels */
+.glass-panel {
+    -fx-background-color: rgba(20, 22, 30, 0.75);
+    -fx-background-radius: 15;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 25, 0, 0, 10);
+}
+
+.glass-panel-dark {
+    -fx-background-color: rgba(15, 18, 24, 0.85);
+    -fx-background-radius: 12;
+    -fx-border-color: rgba(0, 217, 255, 0.2);
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+
+/* Sidebar translucent */
+.sidebar {
+    -fx-background-color: rgba(20, 22, 30, 0.65);
+    -fx-border-color: rgba(42, 45, 58, 0.5);
+    -fx-border-width: 0 1 0 0;
+}
+
+/* Header translucent */
+.header {
+    -fx-background-color: rgba(15, 18, 24, 0.85);
+    -fx-border-color: rgba(42, 45, 58, 0.6);
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Footer translucent */
+.footer {
+    -fx-background-color: rgba(15, 18, 24, 0.85);
+    -fx-border-color: rgba(42, 45, 58, 0.6);
+    -fx-border-width: 1 0 0 0;
+}
+
+/* Button glassmorphism */
+.glass-button {
+    -fx-background-color: rgba(42, 45, 58, 0.7);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.glass-button:hover {
+    -fx-background-color: rgba(52, 55, 68, 0.85);
+    -fx-border-color: rgba(0, 217, 255, 0.3);
+}
+
+.glass-button:pressed {
+    -fx-background-color: rgba(32, 35, 48, 0.9);
+}
+
+/* Primary button with glow */
+.primary-button {
+    -fx-background-color: rgba(0, 217, 255, 0.9);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(255, 255, 255, 0.2);
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 217, 255, 0.5), 20, 0, 0, 5);
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: rgba(0, 200, 240, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 217, 255, 0.7), 25, 0, 0, 7);
+}
+
+.primary-button:pressed {
+    -fx-background-color: rgba(0, 180, 220, 1);
+}
+
+/* TextField glassmorphism */
+.glass-input {
+    -fx-background-color: rgba(15, 18, 24, 0.7);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(122, 128, 144, 0.7);
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(42, 45, 58, 0.6);
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+.glass-input:focused {
+    -fx-border-color: rgba(0, 217, 255, 0.5);
+    -fx-effect: dropshadow(gaussian, rgba(0, 217, 255, 0.3), 10, 0, 0, 0);
+}
+
+/* ListView glassmorphism */
+.glass-list {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.glass-list .list-cell {
+    -fx-background-color: rgba(26, 29, 36, 0.5);
+    -fx-text-fill: white;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+}
+
+.glass-list .list-cell:hover {
+    -fx-background-color: rgba(36, 39, 46, 0.7);
+}
+
+.glass-list .list-cell:selected {
+    -fx-background-color: rgba(0, 217, 255, 0.3);
+    -fx-border-color: rgba(0, 217, 255, 0.5);
+    -fx-border-width: 1;
+}
+
+/* TextArea glassmorphism */
+.glass-console {
+    -fx-control-inner-background: rgba(15, 18, 24, 0.8);
+    -fx-background-color: rgba(15, 18, 24, 0.8);
+    -fx-text-fill: #00d9ff;
+    -fx-background-radius: 8;
+    -fx-border-color: rgba(42, 45, 58, 0.6);
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+/* Slider glassmorphism */
+.glass-slider .thumb {
+    -fx-background-color: rgba(0, 217, 255, 0.9);
+    -fx-effect: dropshadow(gaussian, rgba(0, 217, 255, 0.5), 10, 0, 0, 0);
+}
+
+.glass-slider .track {
+    -fx-background-color: rgba(26, 29, 36, 0.7);
+}
+
+/* Progress bar glassmorphism */
+.glass-progress .bar {
+    -fx-background-color: rgba(0, 217, 255, 0.9);
+    -fx-background-radius: 3;
+}
+
+.glass-progress .track {
+    -fx-background-color: rgba(15, 18, 24, 0.7);
+    -fx-background-radius: 3;
+}
+
+/* CheckBox glassmorphism */
+.glass-checkbox {
+    -fx-text-fill: rgba(176, 179, 186, 0.9);
+}
+
+.glass-checkbox .box {
+    -fx-background-color: rgba(26, 29, 36, 0.7);
+    -fx-border-color: rgba(42, 45, 58, 0.6);
+    -fx-border-radius: 3;
+}
+
+.glass-checkbox:selected .box {
+    -fx-background-color: rgba(0, 217, 255, 0.3);
+    -fx-border-color: rgba(0, 217, 255, 0.8);
+}
+
+/* Logo glow effect */
+.logo-glow {
+    -fx-effect: dropshadow(gaussian, rgba(0, 217, 255, 0.6), 25, 0, 0, 8);
+}
+
+/* Card style */
+.content-card {
+    -fx-background-color: rgba(26, 29, 36, 0.6);
+    -fx-background-radius: 10;
+    -fx-border-color: rgba(42, 45, 58, 0.4);
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+}
+
+/* Separator translucent */
+.separator .line {
+    -fx-border-color: rgba(42, 45, 58, 0.4);
+}
