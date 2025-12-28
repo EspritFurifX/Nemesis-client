@@ -2746,7 +2746,7 @@ input:checked + .toggleSwitchSlider:before {
 
 /* News navigation container. */
 #newsNavigationContainer {
-    display: flex;
+    display: none; /* Hidden since we only have one static news article */
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
@@ -3919,6 +3919,7 @@ input:checked + .toggleSwitchSlider:before {
     justify-content: center;
     width: 100%;
     height: calc(100% - 22px);
+    background-color: #000000;
 }
 
 /* Loading content container. */
@@ -3928,14 +3929,71 @@ input:checked + .toggleSwitchSlider:before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 40px;
 }
 
+/* Logo container */
+#loadLogoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+    padding: 30px;
+}
+
+/* Logo image */
+#loadLogoImage {
+    width: 200px;
+    height: auto;
+    animation: logoGlow 2s ease-in-out infinite;
+    display: block;
+}
+
+/* Text container */
+#loadTextContainer {
+    display: flex;
+    gap: 5px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #00c8ff;
+    text-shadow: 0 0 20px rgba(0, 200, 255, 0.8);
+}
+
+/* Individual characters */
+.loadTextChar {
+    display: inline-block;
+    animation: bounce 1.5s ease-in-out infinite;
+}
+
+/* Logo glow animation */
+@keyframes logoGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(0, 200, 255, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(0, 200, 255, 1));
+    }
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* OLD SPINNER STYLES - CAN BE REMOVED */
 /* Spinner container. */
 #loadSpinnerContainer {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #000000;
+    padding: 50px;
 }
 
 /* Stationary image for the spinner. */
@@ -3943,6 +4001,9 @@ input:checked + .toggleSwitchSlider:before {
     position: absolute;
     width: 277px;
     height: auto;
+    background-color: #000000;
+    padding: 20px;
+    box-sizing: content-box;
 }
 
 /* Rotating image for the spinner. */

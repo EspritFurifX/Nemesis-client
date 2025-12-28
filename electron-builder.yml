@@ -1,8 +1,8 @@
-appId: 'helioslauncher'
-productName: 'Helios Launcher'
-artifactName: '${productName}-setup-${version}.${ext}'
+appId: 'fr.nemesis.client'
+productName: 'Nemesis Launcher'
+artifactName: 'Nemesis-Launcher-${version}.${ext}'
 
-copyright: 'Copyright © 2018-2024 Daniel Scalzi'
+copyright: 'Copyright © 2025 Nemesis Launcher'
 
 asar: true
 compression: 'maximum'
@@ -29,20 +29,19 @@ nsis:
 # macOS Configuration
 mac:
   target:
-    - target: 'dmg'
-      arch:
-        - 'x64'
-        - 'arm64'
-  artifactName: '${productName}-setup-${version}-${arch}.${ext}'
+    - target: 'zip'
+      arch: 'x64'
+  artifactName: '${productName}-setup-${version}.${ext}'
   category: 'public.app-category.games'
+  identity: null
 
 # Linux Configuration
 linux: 
   target: 'AppImage'
-  maintainer: 'Daniel Scalzi'
-  vendor: 'Daniel Scalzi'
-  synopsis: 'Modded Minecraft Launcher'
-  description: 'Custom launcher which allows users to join modded servers. All mods, configurations, and updates are handled automatically.'
+  maintainer: 'Nemesis Launcher'
+  vendor: 'Nemesis Launcher'
+  synopsis: 'Launcher Minecraft Java Edition'
+  description: 'Launcher officiel Minecraft Java Edition avec authentification Microsoft intégrée.'
   category: 'Game'
 
 

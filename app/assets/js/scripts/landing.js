@@ -957,70 +957,59 @@ function displayArticle(articleObject, index){
  * distribution index.
  */
 async function loadNews(){
-
-    const distroData = await DistroAPI.getDistribution()
-    if(!distroData.rawDistribution.rss) {
-        loggerLanding.debug('No RSS feed provided.')
-        return null
-    }
-
-    const promise = new Promise((resolve, reject) => {
+    // Static news article for Nemesis Launcher
+    return new Promise((resolve) => {
+        const articles = [
+            {
+                link: 'https://nemesis-client.fr',
+                title: 'Bienvenue sur Nemesis Launcher',
+                date: new Date().toLocaleDateString('fr-FR', {month: 'long', day: 'numeric', year: 'numeric'}),
+                author: 'Équipe Nemesis',
+                content: `
+                    <div style="font-family: 'Avenir Book', sans-serif; color: #fff; line-height: 1.6;">
+                        <h2 style="color: #00c8ff; margin-bottom: 15px;">Bienvenue sur Nemesis Launcher !</h2>
+                        <p style="margin-bottom: 15px;">
+                            <strong>Nemesis Launcher</strong> est le launcher Minecraft Java Edition moderne 
+                            avec authentification Microsoft officielle intégrée.
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            Profitez d'une expérience de jeu <span style="color: #00c8ff;">sécurisée</span>, 
+                            <span style="color: #00c8ff;">performante</span> et 
+                            <span style="color: #00c8ff;">élégante</span> avec notre launcher 
+                            doté d'une interface au design glassmorphique unique.
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <strong>Fonctionnalités principales :</strong>
+                        </p>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li>✨ Authentification Microsoft officielle</li>
+                            <li>🎮 Installation automatique de Java et Minecraft</li>
+                            <li>🚀 Gestion des mods et modpacks simplifiée</li>
+                            <li>🔒 Sécurité renforcée et mises à jour automatiques</li>
+                            <li>💎 Interface moderne avec effets glassmorphiques</li>
+                        </ul>
+                        <p style="margin-bottom: 15px;">
+                            Rejoignez notre communauté Discord pour obtenir de l'aide, 
+                            partager vos suggestions et rester informé des dernières nouveautés !
+                        </p>
+                        <p style="text-align: center; margin-top: 20px;">
+                            <a href="https://discord.gg/PGm5Btsgb6" 
+                               style="display: inline-block; background: linear-gradient(135deg, #00c8ff 0%, #0080ff 100%); 
+                                      color: white; padding: 12px 30px; text-decoration: none; 
+                                      border-radius: 8px; font-weight: bold; 
+                                      box-shadow: 0 4px 15px rgba(0, 200, 255, 0.3);">
+                                Rejoindre Discord
+                            </a>
+                        </p>
+                    </div>
+                `,
+                comments: '0 Commentaires',
+                commentsLink: 'https://discord.gg/PGm5Btsgb6'
+            }
+        ]
         
-        const newsFeed = distroData.rawDistribution.rss
-        const newsHost = new URL(newsFeed).origin + '/'
-        $.ajax({
-            url: newsFeed,
-            success: (data) => {
-                const items = $(data).find('item')
-                const articles = []
-
-                for(let i=0; i<items.length; i++){
-                // JQuery Element
-                    const el = $(items[i])
-
-                    // Resolve date.
-                    const date = new Date(el.find('pubDate').text()).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'})
-
-                    // Resolve comments.
-                    let comments = el.find('slash\\:comments').text() || '0'
-                    comments = comments + ' Comment' + (comments === '1' ? '' : 's')
-
-                    // Fix relative links in content.
-                    let content = el.find('content\\:encoded').text()
-                    let regex = /src="(?!http:\/\/|https:\/\/)(.+?)"/g
-                    let matches
-                    while((matches = regex.exec(content))){
-                        content = content.replace(`"${matches[1]}"`, `"${newsHost + matches[1]}"`)
-                    }
-
-                    let link   = el.find('link').text()
-                    let title  = el.find('title').text()
-                    let author = el.find('dc\\:creator').text()
-
-                    // Generate article.
-                    articles.push(
-                        {
-                            link,
-                            title,
-                            date,
-                            author,
-                            content,
-                            comments,
-                            commentsLink: link + '#comments'
-                        }
-                    )
-                }
-                resolve({
-                    articles
-                })
-            },
-            timeout: 2500
-        }).catch(err => {
-            resolve({
-                articles: null
-            })
+        resolve({
+            articles
         })
     })
-
-    return await promise
 }
