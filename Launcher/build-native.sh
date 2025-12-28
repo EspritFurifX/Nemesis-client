@@ -23,7 +23,7 @@ echo -e "${NC}"
 # Variables
 APP_NAME="NEMESIS-CLIENT"
 APP_VERSION="2.0.0"
-MAIN_CLASS="com.minecraft.launcher.Main"
+MAIN_CLASS="com.minecraft.launcher.Launcher"
 JAR_FILE="target/minecraft-educational-launcher-1.0.0-SNAPSHOT.jar"
 BUILD_DIR="target"
 PACKAGE_DIR="packages"
@@ -74,6 +74,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         echo -e "${YELLOW}⚠️  Logo non trouvé, icône par défaut utilisée${NC}"
     fi
     
+    # Note: On n'utilise PAS --add-modules car JavaFX est déjà embarqué dans le JAR fat
     jpackage \
         --input "$BUILD_DIR" \
         --name "$APP_NAME" \
