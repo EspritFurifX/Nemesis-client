@@ -8,60 +8,23 @@
     "rss": "https://github.com/EspritFurifX/Nemesis-Launcher/releases.atom",
     "servers": [
         {
-            "id": "nemesis-1.8.9-pvp",
-            "name": "Nemesis PVP - 1.8.9",
-            "description": "Version 1.8.9 optimis\u00e9e pour le PVP",
+            "id": "nemesis-1.21",
+            "name": "Nemesis",
+            "description": "Version officielle Minecraft 1.21 avec Fabric",
             "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
             "version": "1.0.0",
             "address": "play.nemesis.fr",
-            "minecraftVersion": "1.8.9",
+            "minecraftVersion": "1.21",
             "discord": {
-                "shortId": "PVP",
-                "largeImageText": "Nemesis PVP 1.8.9",
+                "shortId": "Nemesis",
+                "largeImageText": "Nemesis Minecraft 1.21",
                 "largeImageKey": "server-icon"
             },
             "mainServer": true,
             "autoconnect": true,
             "javaOptions": {
-                "supported": "8",
-                "suggestedMajor": 8,
-                "ram": {
-                    "recommended": 2048,
-                    "minimum": 1024
-                }
-            },
-            "modules": [
-                {
-                    "id": "net.minecraftforge:forge:1.8.9-11.15.1.2318",
-                    "name": "Minecraft Forge 1.8.9-11.15.1.2318",
-                    "type": "ForgeHosted",
-                    "artifact": {
-                        "size": 0,
-                        "MD5": "",
-                        "url": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.8.9-11.15.1.2318/forge-1.8.9-11.15.1.2318-installer.jar"
-                    },
-                    "subModules": []
-                }
-            ]
-        },
-        {
-            "id": "nemesis-1.20.1",
-            "name": "Nemesis Server - 1.20.1",
-            "description": "Serveur Minecraft 1.20.1 avec Forge",
-            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
-            "version": "1.0.0",
-            "address": "play.nemesis.fr",
-            "minecraftVersion": "1.20.1",
-            "discord": {
-                "shortId": "Nemesis",
-                "largeImageText": "Nemesis Server 1.20.1",
-                "largeImageKey": "server-icon"
-            },
-            "mainServer": false,
-            "autoconnect": true,
-            "javaOptions": {
-                "supported": ">=17",
-                "suggestedMajor": 17,
+                "supported": ">=21",
+                "suggestedMajor": 21,
                 "ram": {
                     "recommended": 4096,
                     "minimum": 2048
@@ -69,163 +32,26 @@
             },
             "modules": [
                 {
-                    "id": "net.minecraftforge:forge:1.20.1-47.2.0",
-                    "name": "Minecraft Forge 1.20.1-47.2.0",
-                    "type": "ForgeHosted",
+                    "id": "net.fabricmc:fabric-loader:0.15.11",
+                    "name": "Fabric Loader 0.15.11",
+                    "type": "Fabric",
                     "artifact": {
                         "size": 0,
                         "MD5": "",
-                        "url": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-47.2.0/forge-1.20.1-47.2.0-installer.jar"
+                        "url": "https://maven.fabricmc.net/net/fabricmc/fabric-loader/0.15.11/fabric-loader-0.15.11.jar"
                     },
-                    "subModules": []
-                }
-            ]
-        },
-        {
-            "id": "nemesis-1.19.4",
-            "name": "Nemesis Server - 1.19.4",
-            "description": "Serveur Minecraft 1.19.4 avec Forge",
-            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
-            "version": "1.0.0",
-            "address": "play.nemesis.fr",
-            "minecraftVersion": "1.19.4",
-            "discord": {
-                "shortId": "Nemesis",
-                "largeImageText": "Nemesis Server 1.19.4",
-                "largeImageKey": "server-icon"
-            },
-            "mainServer": false,
-            "autoconnect": true,
-            "javaOptions": {
-                "supported": ">=17",
-                "suggestedMajor": 17,
-                "ram": {
-                    "recommended": 4096,
-                    "minimum": 2048
-                }
-            },
-            "modules": [
-                {
-                    "id": "net.minecraftforge:forge:1.19.4-45.2.0",
-                    "name": "Minecraft Forge 1.19.4-45.2.0",
-                    "type": "ForgeHosted",
-                    "artifact": {
-                        "size": 0,
-                        "MD5": "",
-                        "url": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.19.4-45.2.0/forge-1.19.4-45.2.0-installer.jar"
-                    },
-                    "subModules": []
-                }
-            ]
-        },
-        {
-            "id": "nemesis-1.18.2",
-            "name": "Nemesis Server - 1.18.2",
-            "description": "Serveur Minecraft 1.18.2 avec Forge",
-            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
-            "version": "1.0.0",
-            "address": "play.nemesis.fr",
-            "minecraftVersion": "1.18.2",
-            "discord": {
-                "shortId": "Nemesis",
-                "largeImageText": "Nemesis Server 1.18.2",
-                "largeImageKey": "server-icon"
-            },
-            "mainServer": false,
-            "autoconnect": true,
-            "javaOptions": {
-                "supported": ">=17",
-                "suggestedMajor": 17,
-                "ram": {
-                    "recommended": 3072,
-                    "minimum": 2048
-                }
-            },
-            "modules": [
-                {
-                    "id": "net.minecraftforge:forge:1.18.2-40.2.0",
-                    "name": "Minecraft Forge 1.18.2-40.2.0",
-                    "type": "ForgeHosted",
-                    "artifact": {
-                        "size": 0,
-                        "MD5": "",
-                        "url": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.18.2-40.2.0/forge-1.18.2-40.2.0-installer.jar"
-                    },
-                    "subModules": []
-                }
-            ]
-        },
-        {
-            "id": "nemesis-1.16.5",
-            "name": "Nemesis Server - 1.16.5",
-            "description": "Serveur Minecraft 1.16.5 avec Forge",
-            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
-            "version": "1.0.0",
-            "address": "play.nemesis.fr",
-            "minecraftVersion": "1.16.5",
-            "discord": {
-                "shortId": "Nemesis",
-                "largeImageText": "Nemesis Server 1.16.5",
-                "largeImageKey": "server-icon"
-            },
-            "mainServer": false,
-            "autoconnect": true,
-            "javaOptions": {
-                "supported": "8-16",
-                "suggestedMajor": 8,
-                "ram": {
-                    "recommended": 3072,
-                    "minimum": 2048
-                }
-            },
-            "modules": [
-                {
-                    "id": "net.minecraftforge:forge:1.16.5-36.2.39",
-                    "name": "Minecraft Forge 1.16.5-36.2.39",
-                    "type": "ForgeHosted",
-                    "artifact": {
-                        "size": 0,
-                        "MD5": "",
-                        "url": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.16.5-36.2.39/forge-1.16.5-36.2.39-installer.jar"
-                    },
-                    "subModules": []
-                }
-            ]
-        },
-        {
-            "id": "nemesis-1.12.2",
-            "name": "Nemesis Server - 1.12.2",
-            "description": "Serveur Minecraft 1.12.2 avec Forge (Legacy)",
-            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
-            "version": "1.0.0",
-            "address": "play.nemesis.fr",
-            "minecraftVersion": "1.12.2",
-            "discord": {
-                "shortId": "Nemesis",
-                "largeImageText": "Nemesis Server 1.12.2",
-                "largeImageKey": "server-icon"
-            },
-            "mainServer": false,
-            "autoconnect": true,
-            "javaOptions": {
-                "supported": "8",
-                "suggestedMajor": 8,
-                "ram": {
-                    "recommended": 2560,
-                    "minimum": 1536
-                }
-            },
-            "modules": [
-                {
-                    "id": "net.minecraftforge:forge:1.12.2-14.23.5.2859",
-                    "name": "Minecraft Forge 1.12.2-14.23.5.2859",
-                    "type": "ForgeHosted",
-                    "artifact": {
-                        "size": 0,
-                        "MD5": "",
-                        "url": "https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2859/forge-1.12.2-14.23.5.2859-installer.jar"
-                    },
-                    "subModules": []
+                    "subModules": [
+                        {
+                            "id": "net.fabricmc:fabric-api:0.100.0+1.21",
+                            "name": "Fabric API 0.100.0",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 0,
+                                "MD5": "",
+                                "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/1.21/fabric-api-0.100.0+1.21.jar"
+                            }
+                        }
+                    ]
                 }
             ]
         }
