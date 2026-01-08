@@ -1,0 +1,247 @@
+{
+    "version": "1.0.0",
+    "discord": {
+        "clientId": "385581240906022916",
+        "smallImageText": "Nemesis Launcher",
+        "smallImageKey": "seal-circle"
+    },
+    "rss": "https://github.com/EspritFurifX/Nemesis-Launcher/releases.atom",
+    "servers": [
+        {
+            "id": "nemesis-1.21",
+            "name": "Nemesis",
+            "description": "Version officielle Minecraft 1.21 avec Fabric",
+            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
+            "version": "1.0.0",
+            "address": "play.nemesis.fr",
+            "minecraftVersion": "1.21.1",
+            "discord": {
+                "shortId": "Nemesis",
+                "largeImageText": "Nemesis Minecraft 1.21",
+                "largeImageKey": "server-icon"
+            },
+            "mainServer": true,
+            "autoconnect": false,
+            "javaOptions": {
+                "supported": ">=21",
+                "suggestedMajor": 21,
+                "ram": {
+                    "recommended": 4096,
+                    "minimum": 2048
+                }
+            },
+            "modules": [
+                {
+                    "id": "net.fabricmc:fabric-loader:0.15.11",
+                    "name": "Fabric Loader 0.15.11",
+                    "type": "Fabric",
+                    "artifact": {
+                        "size": 0,
+                        "MD5": "",
+                        "url": "https://maven.fabricmc.net/net/fabricmc/fabric-loader/0.15.11/fabric-loader-0.15.11.jar"
+                    },
+                    "subModules": [
+                        {
+                            "id": "net.fabricmc:fabric-api:0.100.0+1.21",
+                            "name": "Fabric API 0.100.0",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 0,
+                                "MD5": "",
+                                "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/1.21/fabric-api-0.100.0+1.21.jar"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "nemesis-pvp-1.21",
+            "name": "Nemesis PVP",
+            "description": "Client optimisé pour le PVP avec mods de performance et cosmétiques",
+            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
+            "version": "1.0.0",
+            "address": "play.nemesis.fr",
+            "minecraftVersion": "1.21.1",
+            "discord": {
+                "shortId": "Nemesis PVP",
+                "largeImageText": "Nemesis PVP 1.21",
+                "largeImageKey": "pvp-icon"
+            },
+            "mainServer": false,
+            "autoconnect": false,
+            "javaOptions": {
+                "supported": ">=21",
+                "suggestedMajor": 21,
+                "ram": {
+                    "recommended": 6144,
+                    "minimum": 4096
+                }
+            },
+            "modules": [
+                {
+                    "id": "net.fabricmc:fabric-loader:0.15.11",
+                    "name": "Fabric Loader 0.15.11",
+                    "type": "Fabric",
+                    "artifact": {
+                        "size": 0,
+                        "MD5": "",
+                        "url": "https://maven.fabricmc.net/net/fabricmc/fabric-loader/0.15.11/fabric-loader-0.15.11.jar"
+                    },
+                    "subModules": [
+                        {
+                            "id": "fabric-api",
+                            "name": "Fabric API",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 2304679,
+                                "MD5": "13b876119cd07a7df2d0553d2d8eee0d",
+                                "url": "LOCAL:fabric-api-0.140.3+26.1.jar"
+                            }
+                        },
+                        {
+                            "id": "sodium",
+                            "name": "Sodium",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 1876396,
+                                "MD5": "48b94db165ff1d51c3aa440287dd8b7c",
+                                "url": "LOCAL:sodium-fabric-0.8.2+mc1.21.11.jar"
+                            }
+                        },
+                        {
+                            "id": "lithium",
+                            "name": "Lithium",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 858481,
+                                "MD5": "922e63fbe89c5cd6550f0b5112c1c041",
+                                "url": "LOCAL:lithium-fabric-0.21.2+mc1.21.11.jar"
+                            }
+                        },
+                        {
+                            "id": "ferrite-core",
+                            "name": "FerriteCore",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 77269,
+                                "MD5": "d11e2d40caff550c11e14d622dfe63cb",
+                                "url": "LOCAL:ferritecore-8.0.3-fabric.jar"
+                            }
+                        },
+                        {
+                            "id": "entity-culling",
+                            "name": "Entity Culling",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 1563283,
+                                "MD5": "987bf1ca5cb5dcde79bb6f84f959882e",
+                                "url": "LOCAL:entityculling-fabric-1.9.5-mc1.21.8.jar"
+                            }
+                        },
+                        {
+                            "id": "iris",
+                            "name": "Iris Shaders",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 2795436,
+                                "MD5": "697f2e0b37fa335a5a815237690466c9",
+                                "url": "LOCAL:iris-fabric-1.10.4+mc1.21.11.jar"
+                            }
+                        },
+                        {
+                            "id": "better-combat",
+                            "name": "Better Combat",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 922995,
+                                "MD5": "4ac019a3be26f7bf86fb195fdb81d488",
+                                "url": "LOCAL:bettercombat-fabric-3.0.0+1.21.11.jar"
+                            }
+                        },
+                        {
+                            "id": "cloth-config",
+                            "name": "Cloth Config API",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 1148427,
+                                "MD5": "9de770889c2b19445f57f881e4f7d6f8",
+                                "url": "LOCAL:cloth-config-21.11.153-fabric.jar"
+                            }
+                        },
+                        {
+                            "id": "modmenu",
+                            "name": "Mod Menu",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 768178,
+                                "MD5": "e2a3aeeef123f9c9f840e160dd03f71e",
+                                "url": "LOCAL:modmenu-18.0.0-alpha.3.jar"
+                            }
+                        },
+                        {
+                            "id": "dynamic-fps",
+                            "name": "Dynamic FPS",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 195474,
+                                "MD5": "6d4c7d76e725f069a81e1c85c208eba1",
+                                "url": "LOCAL:dynamic-fps-3.11.2+minecraft-1.21.11-fabric.jar"
+                            }
+                        },
+                        {
+                            "id": "mouse-tweaks",
+                            "name": "Mouse Tweaks",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 75618,
+                                "MD5": "44f747eddb6318544459f02bfbebf752",
+                                "url": "LOCAL:MouseTweaks-fabric-mc1.21.11-2.30.jar"
+                            }
+                        },
+                        {
+                            "id": "no-chat-reports",
+                            "name": "No Chat Reports",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 245492,
+                                "MD5": "782dd7d86817179fdc7a364f78b87b66",
+                                "url": "LOCAL:NoChatReports-FABRIC-1.21.11-v2.18.0.jar"
+                            }
+                        },
+                        {
+                            "id": "reeses-sodium-options",
+                            "name": "Reese's Sodium Options",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 87207,
+                                "MD5": "a964ca79ed35ee285016bdc0c3f9cd09",
+                                "url": "LOCAL:reeses-sodium-options-fabric-2.0.2+mc1.21.11.jar"
+                            }
+                        },
+                        {
+                            "id": "c2me",
+                            "name": "C2ME",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 4687147,
+                                "MD5": "0645f9baddf24e2cf296a26c185ba4d9",
+                                "url": "LOCAL:c2me-fabric-mc1.21.11-0.3.6.0.0.jar"
+                            }
+                        },
+                        {
+                            "id": "lazydfu",
+                            "name": "LazyDFU",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 14531,
+                                "MD5": "b36e83f424c5bb5100a3e8ffea0c6ce7",
+                                "url": "LOCAL:lazydfu-0.1.3.jar"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -257,6 +257,9 @@ function createWindow() {
 
     win.removeMenu()
 
+    // DEV: Ouvrir les Dev Tools pour debug
+    win.webContents.openDevTools()
+
     win.resizable = true
 
     win.on('closed', () => {

@@ -1,0 +1,59 @@
+{
+    "version": "1.0.0",
+    "discord": {
+        "clientId": "385581240906022916",
+        "smallImageText": "Nemesis Launcher",
+        "smallImageKey": "seal-circle"
+    },
+    "rss": "https://github.com/EspritFurifX/Nemesis-Launcher/releases.atom",
+    "servers": [
+        {
+            "id": "nemesis-1.21",
+            "name": "Nemesis - Minecraft 1.21",
+            "description": "Version officielle Minecraft 1.21 avec Fabric",
+            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
+            "version": "1.0.0",
+            "address": "play.nemesis.fr",
+            "minecraftVersion": "1.21",
+            "discord": {
+                "shortId": "Nemesis",
+                "largeImageText": "Nemesis Minecraft 1.21",
+                "largeImageKey": "server-icon"
+            },
+            "mainServer": true,
+            "autoconnect": true,
+            "javaOptions": {
+                "supported": ">=21",
+                "suggestedMajor": 21,
+                "ram": {
+                    "recommended": 4096,
+                    "minimum": 2048
+                }
+            },
+            "modules": [
+                {
+                    "id": "net.fabricmc:fabric-loader:0.15.11",
+                    "name": "Fabric Loader 0.15.11",
+                    "type": "Fabric",
+                    "artifact": {
+                        "size": 0,
+                        "MD5": "",
+                        "url": "https://maven.fabricmc.net/net/fabricmc/fabric-loader/0.15.11/fabric-loader-0.15.11.jar"
+                    },
+                    "subModules": [
+                        {
+                            "id": "net.fabricmc:fabric-api:0.100.0+1.21",
+                            "name": "Fabric API 0.100.0",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 0,
+                                "MD5": "",
+                                "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/1.21/fabric-api-0.100.0+1.21.jar"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

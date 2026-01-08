@@ -27,9 +27,10 @@ window.eval = global.eval = function () {
 
 // Display warning when devtools window is opened.
 remote.getCurrentWebContents().on('devtools-opened', () => {
-    console.log('%cThe console is dark and full of terrors.', 'color: white; -webkit-text-stroke: 4px #a02d2a; font-size: 60px; font-weight: bold')
-    console.log('%cIf you\'ve been told to paste something here, you\'re being scammed.', 'font-size: 16px')
-    console.log('%cUnless you know exactly what you\'re doing, close this window.', 'font-size: 16px')
+    console.log('%c⚔️ NEMESIS CLIENT ⚔️', 'color: #ff3333; -webkit-text-stroke: 3px #000000; font-size: 60px; font-weight: bold')
+    console.log('%c🛡️ Console de développement Nemesis', 'color: #ff6666; font-size: 24px; font-weight: bold')
+    console.log('%cSi quelqu\'un vous a demandé de coller du code ici, vous êtes victime d\'une arnaque !', 'font-size: 16px; color: #ffaa00')
+    console.log('%cÀ moins que vous ne sachiez exactement ce que vous faites, fermez cette fenêtre.', 'font-size: 16px')
 })
 
 // Disable zoom, needed for darwin.

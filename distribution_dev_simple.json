@@ -1,0 +1,69 @@
+{
+    "version": "1.1.0",
+    "discord": {
+        "clientId": "385581240906022916",
+        "smallImageText": "Nemesis Launcher",
+        "smallImageKey": "seal-circle"
+    },
+    "rss": "",
+    "servers": [
+        {
+            "id": "nemesis-1.21",
+            "name": "Nemesis",
+            "description": "Version officielle Minecraft 1.21 avec Fabric",
+            "icon": "https://raw.githubusercontent.com/EspritFurifX/Nemesis-Launcher/main/nemesis-client/build/icon.png",
+            "version": "1.0.0",
+            "address": "play.nemesis.fr",
+            "minecraftVersion": "1.21.1",
+            "discord": {
+                "shortId": "Nemesis",
+                "largeImageText": "Nemesis Minecraft 1.21",
+                "largeImageKey": "server-icon"
+            },
+            "mainServer": true,
+            "autoconnect": false,
+            "javaOptions": {
+                "supported": ">=21",
+                "suggestedMajor": 21,
+                "ram": {
+                    "recommended": 4096,
+                    "minimum": 2048
+                }
+            },
+            "modules": [
+                {
+                    "id": "net.fabricmc:fabric-loader:0.15.11",
+                    "name": "Fabric Loader 0.15.11",
+                    "type": "Fabric",
+                    "artifact": {
+                        "size": 1327691,
+                        "MD5": "b49fcf1bafc14bcda2472a0f060ebe41",
+                        "url": "https://maven.fabricmc.net/net/fabricmc/fabric-loader/0.15.11/fabric-loader-0.15.11.jar"
+                    },
+                    "subModules": [
+                        {
+                            "id": "1.21.1-0.15.11@net.fabricmc:fabric-loader",
+                            "name": "Fabric Loader Version Manifest",
+                            "type": "VersionManifest",
+                            "artifact": {
+                                "size": 0,
+                                "MD5": "",
+                                "url": ""
+                            }
+                        },
+                        {
+                            "id": "maven.modrinth:P7dR8mSH:0.100.0+1.21",
+                            "name": "Fabric API 0.100.0",
+                            "type": "FabricMod",
+                            "artifact": {
+                                "size": 2307936,
+                                "MD5": "8c9c4b6bb9e79f4e27c2f2e0d6fc2c4f",
+                                "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/1.21/fabric-api-0.100.0+1.21.jar"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
